@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype Pembelajaran Interaktif: Teks Deskripsi - SMA N 1 Halmahera Tengah</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#0f2942',
+                            900: '#0a1d30',
+                            1000: '#071625'
+                        },
+                        brand: {
+                            blue: '#0284c7',
+                            lightBlue: '#e0effe',
+                            orange: '#f97316',
+                            yellow: '#f59e0b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom UI Stylings */
+        .header-curved {
+            background: linear-gradient(135deg, #0a1d30 0%, #0f2942 70%);
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+        }
+        
+        .orange-badge {
+            background-color: #f97316;
+            color: white;
+        }
+
+        .active-sidebar-item {
+            background-color: #ffffff !important;
+            color: #0a1d30 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+            transform: translateX(4px);
+        }
+
+        .active-sidebar-item span.num-badge {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0284c7;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-slate-200/70 font-sans text-slate-800 min-h-screen flex flex-col justify-between selection:bg-brand-blue selection:text-white">
+
+    <!-- HEADER PROTOTYPE (Matching Image Layout) -->
+    <header class="header-curved text-white shadow-xl relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <!-- Left Title Section -->
+                <div class="flex items-center space-x-4 w-full md:w-auto justify-between md:justify-start">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-14 h-14 bg-white rounded-2xl p-2 flex items-center justify-center shadow-lg border-2 border-brand-blue">
+                            <i class="fa-solid fa-graduation-cap text-3xl text-brand-blue"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold tracking-widest text-brand-orange uppercase bg-orange-950/60 px-2.5 py-0.5 rounded-full border border-orange-500/30">
+                                PROTOTYPE PEMBELAJARAN INTERAKTIF
+                            </span>
+                            <h1 class="text-xl md:text-2xl font-black text-white tracking-tight leading-snug">
+                                TEKS DESKRIPSI
+                            </h1>
+                            <p class="text-xs text-slate-300 font-medium">
+                                Kelas: XI SMA • Mata Pelajaran: Bahasa Indonesia • Tahun Ajaran: 2023/2024
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button id="mobile-menu-toggle" class="md:hidden text-white p-2 rounded-xl bg-navy-800 border border-slate-700">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Right Teacher Profile Badge -->
+                <div class="flex items-center space-x-3 bg-navy-800/90 border border-brand-orange/40 p-2.5 px-4 rounded-2xl shadow-inner w-full md:w-auto justify-end">
+                    <div class="text-right">
+                        <p class="text-[11px] text-slate-300 font-semibold">SMA N 1 Halmahera Tengah</p>
+                        <p class="text-sm font-extrabold text-white">Fitriyani Mujaim, S.Pd</p>
+                        <p class="text-[10px] text-brand-orange font-medium flex items-center justify-end gap-1">
+                            <span class="w-2 h-2 rounded-full bg-brand-orange inline-block animate-ping"></span> Guru Mata Pelajaran
+                        </p>
+                    </div>
+                    <img src="https://placehold.co/100x100/f97316/ffffff?text=FM" alt="Fitriyani Mujaim, S.Pd" class="w-12 h-12 rounded-full border-2 border-white object-cover shadow-md">
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- SIDEBAR NAVIGATION MENU (LEFT 4 COLS) -->
+            <aside id="sidebar-menu" class="lg:col-span-4 flex flex-col gap-4">
+                <div class="bg-navy-900 rounded-3xl p-4 shadow-2xl border border-slate-700/60">
+                    <div class="flex items-center justify-between px-3 py-2 mb-2 border-b border-slate-800">
+                        <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">DAFTAR MENU</span>
+                        <span class="text-[10px] bg-brand-blue text-white px-2 py-0.5 rounded-full font-bold">6 Modul</span>
+                    </div>
+
+                    <nav class="space-y-2">
+                        <!-- 1. TUJUAN PEMBELAJARAN -->
+                        <button onclick="switchTab(0)" id="nav-btn-0" class="nav-btn-item w-full flex items-center justify-between p-3.5 rounded-2xl text-left transition-all text-slate-200 hover:bg-navy-800">
+                            <div class="flex items-center space-x-3">
+                                <span class="num-badge w-8 h-8 rounded-xl bg-navy-800 text-brand-blue flex items-center justify-center text-xs font-black border border-slate-700">1</span>
+                                <span class="font-bold text-xs md:text-sm tracking-wide">TUJUAN PEMBELAJARAN</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                        </button>
+
+                        <!-- 2. ASESMEN AWAL -->
+                        <button onclick="switchTab(1)" id="nav-btn-1" class="nav-btn-item w-full flex items-center justify-between p-3.5 rounded-2xl text-left transition-all text-slate-200 hover:bg-navy-800">
+                            <div class="flex items-center space-x-3">
+                                <span class="num-badge w-8 h-8 rounded-xl bg-navy-800 text-brand-blue flex items-center justify-center text-xs font-black border border-slate-700">2</span>
+                                <span class="font-bold text-xs md:text-sm tracking-wide">ASESMEN AWAL</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                        </button>
+
+                        <!-- 3. MATERI -->
+                        <button onclick="switchTab(2)" id="nav-btn-2" class="nav-btn-item active-sidebar-item w-full flex items-center justify-between p-3.5 rounded-2xl text-left transition-all text-slate-200 hover:bg-navy-800">
+                            <div class="flex items-center space-x-3">
+                                <span class="num-badge w-8 h-8 rounded-xl bg-navy-800 text-brand-blue flex items-center justify-center text-xs font-black border border-slate-700">3</span>
+                                <span class="font-bold text-xs md:text-sm tracking-wide">MATERI</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                        </button>
+
+                        <!-- 4. ASESMEN FORMATIF -->
+                        <button onclick="switchTab(3)" id="nav-btn-3" class="nav-btn-item w-full flex items-center justify-between p-3.5 rounded-2xl text-left transition-all text-slate-200 hover:bg-navy-800">
+                            <div class="flex items-center space-x-3">
+                                <span class="num-badge w-8 h-8 rounded-xl bg-navy-800 text-brand-blue flex items-center justify-center text-xs font-black border border-slate-700">4</span>
+                                <span class="font-bold text-xs md:text-sm tracking-wide">ASESMEN FORMATIF</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                        </button>
+
+                        <!-- 5. ASESMEN SUMATIF -->
+                        <button onclick="switchTab(4)" id="nav-btn-4" class="nav-btn-item w-full flex items-center justify-between p-3.5 rounded-2xl text-left transition-all text-slate-200 hover:bg-navy-800">
+                            <div class="flex items-center space-x-3">
+                                <span class="num-badge w-8 h-8 rounded-xl bg-navy-800 text-brand-blue flex items-center justify-center text-xs font-black border border-slate-700">5</span>
+                                <span class="font-bold text-xs md:text-sm tracking-wide">ASESMEN SUMATIF</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                        </button>
+
+                        <!-- 6. REFLEKSI -->
+                        <button onclick="switchTab(5)" id="nav-btn-5" class="nav-btn-item w-full flex items-center justify-between p-3.5 rounded-2xl text-left transition-all text-slate-200 hover:bg-navy-800">
+                            <div class="flex items-center space-x-3">
+                                <span class="num-badge w-8 h-8 rounded-xl bg-navy-800 text-brand-blue flex items-center justify-center text-xs font-black border border-slate-700">6</span>
+                                <span class="font-bold text-xs md:text-sm tracking-wide">REFLEKSI</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Info Box Card -->
+                <div class="bg-gradient-to-r from-brand-orange to-amber-500 text-white rounded-3xl p-5 shadow-lg flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-sm">Media Interaktif</h4>
+                        <p class="text-xs text-orange-50 leading-snug">Klik tombol pada sidebar atau bagian bawah kartu untuk mempelajari materi secara berurutan.</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- CONTENT AREA (RIGHT 8 COLS) -->
+            <section class="lg:col-span-8">
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 md:p-8 min-h-[620px] flex flex-col justify-between relative overflow-hidden">
+                    
+                    <!-- TOP CONTENT HEADER / SUB NAVBAR -->
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-200">
+                        <div>
+                            <span id="content-subtitle" class="text-xs font-bold text-brand-blue uppercase tracking-wider">MATERI UTAMA</span>
+                            <h2 id="content-title" class="text-xl md:text-2xl font-black text-slate-800">MATERI: MENGENAL TEKS DESKRIPSI</h2>
+                        </div>
+                        
+                        <!-- Top Nav Utility Buttons (Matching Image: Home, Panduan, Kontak) -->
+                        <div class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchTab(0)" class="px-3 py-1.5 text-xs font-bold text-brand-blue bg-white rounded-lg shadow-sm">Home</button>
+                            <button onclick="showModal('panduan')" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900">Panduan</button>
+                            <button onclick="showModal('kontak')" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900">Kontak</button>
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC SECTION CONTENT -->
+                    <div id="content-body" class="flex-grow">
+
+                        <!-- SECTION 1: TUJUAN PEMBELAJARAN -->
+                        <div id="section-0" class="content-section space-y-5">
+                            <div class="bg-sky-50 border-l-4 border-brand-blue p-4 rounded-r-2xl">
+                                <h3 class="font-bold text-slate-800 text-sm">Capaian Pembelajaran (CP) Bahasa Indonesia Kelas XI:</h3>
+                                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                    Peserta didik mampu menguji, menganalisis, dan menyajikan informasi berupa fakta maupun deskripsi secara akurat dan rinci terkait kearifan lokal Halmahera Tengah.
+                                </p>
+                            </div>
+
+                            <h4 class="font-bold text-slate-800 text-sm">Target Tujuan Pembelajaran:</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+                                    <span class="text-xs font-bold text-brand-blue">Tujuan 1</span>
+                                    <p class="text-xs font-semibold text-slate-800">Mengidentifikasi Struktur Teks</p>
+                                    <p class="text-[11px] text-slate-500">Mampu menentukan bagian identifikasi, deskripsi bagian, dan simpulan.</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+                                    <span class="text-xs font-bold text-brand-blue">Tujuan 2</span>
+                                    <p class="text-xs font-semibold text-slate-800">Menganalisis Kaidah Kebahasaan</p>
+                                    <p class="text-[11px] text-slate-500">Mampu menemukan kata konkret, majas, dan citraan pancaindra.</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+                                    <span class="text-xs font-bold text-brand-blue">Tujuan 3</span>
+                                    <p class="text-xs font-semibold text-slate-800">Menulis Deskripsi Objek Lokal</p>
+                                    <p class="text-[11px] text-slate-500">Menyusun teks deskripsi tentang keindahan alam Halmahera Tengah.</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+                                    <span class="text-xs font-bold text-brand-blue">Tujuan 4</span>
+                                    <p class="text-xs font-semibold text-slate-800">Evaluasi & Refleksi Mandiri</p>
+                                    <p class="text-[11px] text-slate-500">Mengukur pemahaman secara jujur melalui kuis formatif dan sumatif.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: ASESMEN AWAL -->
+                        <div id="section-1" class="content-section space-y-4">
+                            <p class="text-xs text-slate-600">Jawab pertanyaan pemetaan awal berikut sebelum melanjutkan membaca materi:</p>
+
+                            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                                <p class="text-xs font-bold text-slate-800">1. Apa yang dimaksud dengan Teks Deskripsi menurut pemahamanmu?</p>
+                                <div class="space-y-2">
+                                    <button onclick="setAwal(this)" class="quiz-opt-btn w-full text-left p-3 rounded-xl bg-white border border-slate-200 text-xs hover:border-brand-blue transition">
+                                        A. Teks yang menceritakan urutan kejadian rekaan atau fiksi secara kronologis.
+                                    </button>
+                                    <button onclick="setAwal(this)" class="quiz-opt-btn w-full text-left p-3 rounded-lg bg-white border border-slate-200 text-xs hover:border-brand-blue transition">
+                                        B. Teks yang menggambarkan suatu objek/tempat secara rinci hingga seolah pembaca melihat sendiri.
+                                    </button>
+                                    <button onclick="setAwal(this)" class="quiz-opt-btn w-full text-left p-3 rounded-lg bg-white border border-slate-200 text-xs hover:border-brand-blue transition">
+                                        C. Teks yang berisi argumen dan ajakan untuk memengaruhi ide gagasan pembaca.
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="awal-feedback" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-medium">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i> Pemahaman awal berhasil dicatat! Jawaban yang tepat adalah B. Silakan lanjut ke menu <b>3. MATERI</b>.
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: MATERI (DEFAULT ACTIVE MATCHING PROTOTYPE IMAGE) -->
+                        <div id="section-2" class="content-section active space-y-5">
+                            
+                            <!-- MAIN TITLE BOX -->
+                            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                                <h3 class="font-extrabold text-sm md:text-base text-slate-800 uppercase tracking-tight mb-2">
+                                    PENGERTIAN TEKS DESKRIPSI (KELAS XI SMA N 1 HALMAHERA TENGAH)
+                                </h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                                    <div class="md:col-span-5 rounded-xl overflow-hidden border border-slate-300 shadow-sm">
+                                        <img src="https://placehold.co/600x400/0284c7/ffffff?text=Keindahan+Wisata+Halmahera+Tengah" alt="Pantai Halmahera Tengah" class="w-full h-36 object-cover">
+                                    </div>
+                                    <div class="md:col-span-7">
+                                        <p class="text-xs text-slate-600 leading-relaxed">
+                                            Pengertian teks deskripsi (Kelas XI SMA N 1 Halmahera Tengah) mengenai aturan-teknik penggambaran objek secara mendalam sehingga dapat mengesankan pembaca seolah-olah hadir dan mengamati langsung panorama alam dan kebudayaan daerah Halmahera Tengah.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2 COLUMNS GRID FOR CIRI & STRUKTUR & VIDEO -->
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                
+                                <!-- Left Column: Ciri & Struktur -->
+                                <div class="md:col-span-6 space-y-4">
+                                    <!-- Ciri-ciri -->
+                                    <div class="p-4 bg-orange-50/60 rounded-2xl border border-orange-200">
+                                        <div class="flex items-center space-x-2 text-brand-orange mb-2">
+                                            <i class="fa-solid fa-certificate text-sm"></i>
+                                            <h4 class="font-bold text-xs text-slate-800">Ciri-ciri Teks Deskripsi</h4>
+                                        </div>
+                                        <ul class="text-[11px] text-slate-600 space-y-1 list-disc list-inside">
+                                            <li>Menggambarkan objek secara mendetail & khusus.</li>
+                                            <li>Melibatkan citraan panca indra (penglihatan, perabaan, pendengaran).</li>
+                                            <li>Menggunakan kata sifat dan kata konkret.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Struktur -->
+                                    <div class="p-4 bg-sky-50/60 rounded-2xl border border-sky-200">
+                                        <div class="flex items-center space-x-2 text-brand-blue mb-2">
+                                            <i class="fa-solid fa-layer-group text-sm"></i>
+                                            <h4 class="font-bold text-xs text-slate-800">Struktur Teks Deskripsi</h4>
+                                        </div>
+                                        <p class="text-[11px] text-slate-600 font-semibold mb-1">(Identifikasi, Deskripsi Bagian, Simpulan)</p>
+                                        <ul class="text-[11px] text-slate-600 space-y-1 list-disc list-inside">
+                                            <li><b>Identifikasi:</b> Penentuan identitas & lokasi objek.</li>
+                                            <li><b>Deskripsi Bagian:</b> Rincian fisik/suasana tempat.</li>
+                                            <li><b>Simpulan:</b> Kesan akhir penulis terhadap objek.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Video / Media Preview -->
+                                <div class="md:col-span-6">
+                                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 h-full flex flex-col justify-between space-y-3">
+                                        <div class="flex items-center space-x-2 text-brand-orange">
+                                            <i class="fa-solid fa-play-circle text-sm"></i>
+                                            <h4 class="font-bold text-xs text-slate-800">Contoh Teks Deskripsi: Pantai Boki Maruru</h4>
+                                        </div>
+
+                                        <!-- Simulated Video Container -->
+                                        <div class="relative rounded-xl overflow-hidden bg-slate-900 group aspect-video flex items-center justify-center shadow">
+                                            <img src="https://placehold.co/600x350/0f2942/ffffff?text=Wisata+Pantai+Boki+Maruru" alt="Video Pantai Boki Maruru" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                                            <button onclick="alert('Memutar media pengenalan objek deskripsi Pantai Boki Maruru, Halmahera Tengah.')" class="absolute w-12 h-12 bg-brand-orange text-white rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition">
+                                                <i class="fa-solid fa-play text-lg ml-1"></i>
+                                            </button>
+                                        </div>
+                                        <p class="text-[10px] text-slate-400 text-center">Video Media Visual Deskripsi Objek Lokal</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: ASESMEN FORMATIF -->
+                        <div id="section-3" class="content-section space-y-5">
+                            <p class="text-xs text-slate-600">Latihan formatif sederhana untuk menguji pemahaman kaidah kebahasaan:</p>
+
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                                <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-md">Latihan 1</span>
+                                <p class="text-xs font-semibold text-slate-800">
+                                    "Air terjun di Halmahera Tengah itu gemericik jernih menyejukkan dahaga para wisatawan."<br>
+                                    <span class="font-normal text-[11px] text-slate-500 mt-1 block">Kalimat di atas menggunakan panca indra...</span>
+                                </p>
+
+                                <div class="space-y-2 text-xs">
+                                    <button onclick="checkFormatif('pendengaran')" class="w-full text-left p-3 rounded-xl bg-white border border-slate-200 hover:border-brand-blue transition">A. Pendengaran & Penglihatan</button>
+                                    <button onclick="checkFormatif('penciuman')" class="w-full text-left p-3 rounded-xl bg-white border border-slate-200 hover:border-brand-blue transition">B. Penciuman & Pembauan</button>
+                                    <button onclick="checkFormatif('perabaan')" class="w-full text-left p-3 rounded-xl bg-white border border-slate-200 hover:border-brand-blue transition">C. Perabaan Saja</button>
+                                </div>
+
+                                <div id="formatif-result" class="hidden p-3 rounded-xl text-xs font-semibold"></div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 5: ASESMEN SUMATIF -->
+                        <div id="section-4" class="content-section space-y-5">
+                            <p class="text-xs text-slate-600">Kerjakan soal evaluasi sumatif di bawah ini untuk memperoleh nilai akhir modul Teks Deskripsi:</p>
+
+                            <form id="sumatif-form" class="space-y-4">
+                                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                                    <p class="text-xs font-bold text-slate-800">Soal 1: Bagian yang menerangkan identitas atau lokasi objek deskripsi dinamakan...</p>
+                                    <div class="space-y-1 text-xs">
+                                        <label class="flex items-center p-2 rounded-lg bg-white border cursor-pointer hover:bg-slate-100"><input type="radio" name="sq1" value="A" class="mr-2"> A. Deskripsi Bagian</label>
+                                        <label class="flex items-center p-2 rounded-lg bg-white border cursor-pointer hover:bg-slate-100"><input type="radio" name="sq1" value="B" class="mr-2"> B. Identifikasi Umum</label>
+                                        <label class="flex items-center p-2 rounded-lg bg-white border cursor-pointer hover:bg-slate-100"><input type="radio" name="sq1" value="C" class="mr-2"> C. Simpulan Kesan</label>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                                    <p class="text-xs font-bold text-slate-800">Soal 2: Manakah contoh kata konkret yang sering digunakan dalam deskripsi alam?</p>
+                                    <div class="space-y-1 text-xs">
+                                        <label class="flex items-center p-2 rounded-lg bg-white border cursor-pointer hover:bg-slate-100"><input type="radio" name="sq2" value="A" class="mr-2"> A. Keindahan, Kesedihan</label>
+                                        <label class="flex items-center p-2 rounded-lg bg-white border cursor-pointer hover:bg-slate-100"><input type="radio" name="sq2" value="B" class="mr-2"> B. Karang, Pasir, Air Laut</label>
+                                        <label class="flex items-center p-2 rounded-lg bg-white border cursor-pointer hover:bg-slate-100"><input type="radio" name="sq2" value="C" class="mr-2"> C. Keinginan, Harapan</label>
+                                    </div>
+                                </div>
+
+                                <button type="button" onclick="hitungSumatif()" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded-2xl shadow transition">
+                                    Kirim & Hitung Nilai Sumatif
+                                </button>
+                            </form>
+
+                            <div id="sumatif-result-box" class="hidden p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-500 text-center space-y-2">
+                                <h4 class="font-bold text-slate-800 text-sm">Nilai Akhir Asesmen Sumatif:</h4>
+                                <p id="sumatif-score" class="text-3xl font-black text-emerald-600">100 / 100</p>
+                                <p class="text-xs text-emerald-800 font-medium">Selamat! Kamu dinyatakan TUNTAS pada modul Teks Deskripsi ini.</p>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 6: REFLEKSI -->
+                        <div id="section-5" class="content-section space-y-4">
+                            <p class="text-xs text-slate-600">Isi lembar refleksi diri untuk mengukur pemahaman materi:</p>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Nama Siswa:</label>
+                                    <input type="text" id="ref-nama-input" placeholder="Ketik nama lengkap..." class="w-full p-2.5 rounded-xl border text-xs focus:ring-2 focus:ring-brand-blue focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Bagian mana yang paling kamu sukai dari pembelajaran ini?</label>
+                                    <textarea id="ref-teks-1" rows="2" placeholder="Tulis pendapatmu..." class="w-full p-2.5 rounded-xl border text-xs focus:ring-2 focus:ring-brand-blue focus:outline-none"></textarea>
+                                </div>
+                                <button onclick="simpanRefleksi()" class="w-full bg-navy-800 hover:bg-navy-900 text-white font-bold py-2.5 rounded-xl text-xs transition">
+                                    Simpan Jurnal Refleksi
+                                </button>
+                            </div>
+
+                            <div id="ref-result" class="hidden p-3 rounded-xl bg-sky-50 border border-sky-300 text-sky-900 text-xs font-medium">
+                                <i class="fa-solid fa-circle-check text-brand-blue mr-1.5"></i> Jurnal refleksi berhasil tersimpan ke sistem Ibu Fitriyani Mujaim, S.Pd!
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- BOTTOM NAVIGATION BUTTONS (MATCHING PROTOTYPE DESIGN) -->
+                    <div class="pt-4 mt-6 border-t border-slate-200 flex items-center justify-between gap-4">
+                        <button id="btn-prev-bottom" onclick="navigatePrev()" class="px-4 py-2.5 rounded-xl border-2 border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold transition flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span id="label-prev">Sebelumnya: Asesmen Awal</span>
+                        </button>
+
+                        <button id="btn-next-bottom" onclick="navigateNext()" class="px-5 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-900 text-white text-xs font-bold transition shadow flex items-center gap-2">
+                            <span id="label-next">Selanjutnya: Asesmen Formatif</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-900 text-slate-400 py-4 mt-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs">
+            <p>© 2024 SMA N 1 Halmahera Tengah • Media Pembelajaran Interaktif Teks Deskripsi Kelas XI</p>
+            <p class="text-slate-500 text-[11px] mt-1">Dikembangkan oleh: <b>Fitriyani Mujaim, S.Pd</b></p>
+        </div>
+    </footer>
+
+    <!-- MODAL POPUP FOR PANDUAN & KONTAK -->
+    <div id="info-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 id="modal-title" class="font-bold text-slate-800 text-base">Panduan Penggunaan</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="modal-body" class="text-xs text-slate-600 leading-relaxed space-y-2">
+                <!-- Injected dynamically -->
+            </div>
+            <button onclick="closeModal()" class="w-full bg-brand-blue text-white font-bold py-2 rounded-xl text-xs">Tutup</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Module Section Metadata
+        const modules = [
+            { id: 0, key: 'tujuan', title: '1. TUJUAN PEMBELAJARAN', subtitle: 'CAPAIAN PEMBELAJARAN' },
+            { id: 1, key: 'asesmen-awal', title: '2. ASESMEN DIAGNOSTIK AWAL', subtitle: 'PEMETAAN KEMAMPUAN' },
+            { id: 2, key: 'materi', title: 'MATERI: MENGENAL TEKS DESKRIPSI', subtitle: 'MATERI UTAMA' },
+            { id: 3, key: 'formatif', title: '4. ASESMEN FORMATIF', subtitle: 'LATIHAN PEMBENTUKAN' },
+            { id: 4, key: 'sumatif', title: '5. ASESMEN SUMATIF', subtitle: 'EVALUASI AKHIR' },
+            { id: 5, key: 'refleksi', title: '6. REFLEKSI BELAJAR', subtitle: 'JURNAL MANDIRI' }
+        ];
+
+        let currentIndex = 2; // Default to MATERI (Matching Image)
+
+        function switchTab(index) {
+            if (index < 0 || index >= modules.length) return;
+            currentIndex = index;
+
+            // Update content visibility
+            document.querySelectorAll('.content-section').forEach((sec, idx) => {
+                sec.classList.toggle('active', idx === currentIndex);
+            });
+
+            // Update sidebar buttons styling
+            document.querySelectorAll('.nav-btn-item').forEach((btn, idx) => {
+                if (idx === currentIndex) {
+                    btn.classList.add('active-sidebar-item');
+                } else {
+                    btn.classList.remove('active-sidebar-item');
+                }
+            });
+
+            // Update Titles
+            document.getElementById('content-title').textContent = modules[currentIndex].title;
+            document.getElementById('content-subtitle').textContent = modules[currentIndex].subtitle;
+
+            // Update Bottom Navigation Labels
+            const prevBtn = document.getElementById('btn-prev-bottom');
+            const nextBtn = document.getElementById('btn-next-bottom');
+            const prevLabel = document.getElementById('label-prev');
+            const nextLabel = document.getElementById('label-next');
+
+            if (currentIndex === 0) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+                prevLabel.textContent = `Sebelumnya: ${modules[currentIndex - 1].title.replace(/^\d+\.\s*/, '')}`;
+            }
+
+            if (currentIndex === modules.length - 1) {
+                nextBtn.style.visibility = 'hidden';
+            } else {
+                nextBtn.style.visibility = 'visible';
+                nextLabel.textContent = `Selanjutnya: ${modules[currentIndex + 1].title.replace(/^\d+\.\s*/, '')}`;
+            }
+
+            // Mobile menu collapse
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar-menu').classList.add('hidden');
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIndex > 0) switchTab(currentIndex - 1);
+        }
+
+        function navigateNext() {
+            if (currentIndex < modules.length - 1) switchTab(currentIndex + 1);
+        }
+
+        // Quiz & Form Actions
+        function setAwal(btn) {
+            document.querySelectorAll('.quiz-opt-btn').forEach(b => b.classList.remove('border-brand-blue', 'bg-sky-50'));
+            btn.classList.add('border-brand-blue', 'bg-sky-50');
+            document.getElementById('awal-feedback').classList.remove('hidden');
+        }
+
+        function checkFormatif(ans) {
+            const res = document.getElementById('formatif-result');
+            res.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+            
+            if (ans === 'pendengaran') {
+                res.classList.add('bg-emerald-100', 'text-emerald-800');
+                res.innerHTML = '<i class="fa-solid fa-circle-check"></i> Jawaban Tepat! Kata "gemericik" (pendengaran) & "jernih" (penglihatan).';
+            } else {
+                res.classList.add('bg-rose-100', 'text-rose-800');
+                res.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Kurang tepat. Coba perhatikan kata gemericik dan jernih.';
+            }
+        }
+
+        function hitungSumatif() {
+            const form = document.getElementById('sumatif-form');
+            const q1 = form.elements['sq1']?.value;
+            const q2 = form.elements['sq2']?.value;
+            let score = 0;
+
+            if (q1 === 'B') score += 50;
+            if (q2 === 'B') score += 50;
+
+            const resBox = document.getElementById('sumatif-result-box');
+            document.getElementById('sumatif-score').textContent = `${score} / 100`;
+            resBox.classList.remove('hidden');
+        }
+
+        function simpanRefleksi() {
+            const nama = document.getElementById('ref-nama-input').value;
+            if (!nama) {
+                alert('Silakan isi nama kamu terlebih dahulu.');
+                return;
+            }
+            document.getElementById('ref-result').classList.remove('hidden');
+        }
+
+        // Modal Utility
+        function showModal(type) {
+            const modal = document.getElementById('info-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            if (type === 'panduan') {
+                title.textContent = 'Panduan Penggunaan Media';
+                body.innerHTML = `
+                    <p>1. Gunakan menu di sebelah kiri untuk berpindah modul secara acak.</p>
+                    <p>2. Tekan tombol <b>Sebelumnya/Selanjutnya</b> di bawah kartu materi untuk belajar secara berurutan.</p>
+                    <p>3. Kerjakan Asesmen Formatif & Sumatif untuk menguji tingkat kemampuan kamu.</p>
+                `;
+            } else {
+                title.textContent = 'Kontak Pengembang';
+                body.innerHTML = `
+                    <p><b>Guru Mata Pelajaran:</b> Fitriyani Mujaim, S.Pd</p>
+                    <p><b>Instansi:</b> SMA N 1 Halmahera Tengah</p>
+                    <p><b>Mata Pelajaran:</b> Bahasa Indonesia Kelas XI</p>
+                `;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar-menu');
+            sidebar.classList.toggle('hidden');
+        });
+
+        // Initialize default view on load
+        window.onload = function() {
+            switchTab(2); // Start on MATERI as shown in screenshot prototype
+        }
+    </script>
+</body>
+</html>
